@@ -20,7 +20,7 @@ pipi = Usuario {nombre="@lapipi",seguidos=["@titoOk"]}
 
 
 santi::Usuario
-santi= Usuario{nombre="santi",seguidos=["@don_churrasco","@titoOk"]}
+santi= Usuario{nombre="santi",seguidos=["@don_churrasco","@titoOk"]}  --ejemplo ,nadie sigue a santi
 
 type Texto = String
 type Cantidad = Int
@@ -54,7 +54,7 @@ seSiguen::Usuario->Usuario->Bool
 seSiguen p1 p2 = elem (nombre p1) (seguidos p2)
 
 --Punto 3
-seguidores::Usuario->[Usuario]->[Nombre]
+seguidores::Usuario->[Usuario]->[Nombre]                       --es Seguidor si mi nombre aparece en su lista de seguidos 
 seguidores u (x:xs) | elem (nombre u) (seguidos x) = (nombre x):seguidores u xs
                     | otherwise = seguidores u xs
 seguidores u [] = []

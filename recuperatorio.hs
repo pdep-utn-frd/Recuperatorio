@@ -19,6 +19,9 @@ pipi::Usuario
 pipi = Usuario {nombre="@lapipi",seguidos=["@titoOk"]}
 
 
+santi::Usuario
+santi= Usuario{nombre="santi",seguidos=["@don_churrasco","@titoOk"]}
+
 type Texto = String
 type Cantidad = Int
 
@@ -52,7 +55,7 @@ seSiguen p1 p2 = elem (nombre p1) (seguidos p2)
 
 --Punto 3
 seguidores::Usuario->[Usuario]->[Nombre]
-seguidores u (x:xs) | elem (nombre x) (seguidos u) = (nombre x):seguidores u xs
+seguidores u (x:xs) | elem (nombre u) (seguidos x) = (nombre x):seguidores u xs
                     | otherwise = seguidores u xs
 seguidores u [] = []
 
@@ -63,3 +66,32 @@ favear mensaje = mensaje{favs= (favs mensaje)+1}
 
 editar::Texto->Mensaje->Mensaje
 editar text mensaje = mensaje{texto= text ++ (texto mensaje ) }
+
+-- repipear
+--Definir una función repipear un mensaje por parte de otro usuario, que devuelve el nuevo mensaje con 0 favoritos,
+ --y cuyo contenido sea como el del mensaje original, sólo que editado automáticamente con el nombre del usuario original 
+ --y un  ": " al principio.
+
+repipear::Usuario->Mensaje->Mensaje
+repipear usu mens = mens{ usuario= (nombre usu),texto =(usuario mens) ++ ": " ++ (texto mens), favs=0} 
+
+--Punto 5 
+type Accion = Mensaje->Mensaje
+
+
+masValoracion::Mensaje->Accion->Accion->Mensaje
+masValoracion mensaje a1 a2 | valoracion(a1 mensaje) > valoracion (a2 mensaje) = a1 mensaje
+                            | valoracion(a1 mensaje) < valoracion (a2 mensaje) = a2 mensaje
+                            | otherwise = a1 mensaje -- si son iguales realizo la primera accion que se le paso 
+
+
+
+--a1 y a2 deben ser funciones de Mensaje->Mensaje,, uso aplicacion Parcial en editar y repipear para que tengan que recibir un Mensaje como parametro
+-- si hago     masValoracion mensaje favear (editar "hola") 
+-- me devuelve el mensaje     Mensaje {usuario = "@titoOk", texto = "Las personas que viajan en tren se quejan de llenos", favs = 101}
+-- ya que la valoracion de favear es mayor a la de (editar "hola")
+
+
+--si hago  masValoracion mensaje (repipear churrasco) (editar "argentina") 
+-- me devuelve el mensaje Mensaje{usuario = "@titoOk", texto = "argentina Las personas que viajan en tren se quejan de llenos", favs = 100}
+--ya que la valoracion de (repipear churrasco) es menor a la de (editar "argentina")

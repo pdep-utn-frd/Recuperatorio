@@ -18,9 +18,8 @@ tito = Usuario {nombre="@titoOk",seguidos= ["@lapipi", "@marsupialRengo"]}
 pipi::Usuario
 pipi = Usuario {nombre="@lapipi",seguidos=["@titoOk"]}
 
-
 santi::Usuario
-santi= Usuario{nombre="santi",seguidos=["@don_churrasco","@titoOk"]}  --ejemplo ,nadie sigue a santi
+santi= Usuario{nombre="santi",seguidos=["@don_churrasco","@titoOk"]}  --agrego ejemplo ,nadie sigue a este usuario
 
 type Texto = String
 type Cantidad = Int
